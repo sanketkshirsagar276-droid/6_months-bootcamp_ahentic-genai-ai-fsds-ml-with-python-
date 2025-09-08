@@ -1,0 +1,731 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.43 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| nit                |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.02 sec)
+
+mysql> create database nit;
+ERROR 1007 (HY000): Can't create database 'nit'; database exists
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| nit                |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use nit;
+Database changed
+mysql> create table student(name varchar(30),id int not null primary key,address varchar(50),marks int);
+ERROR 1050 (42S01): Table 'student' already exists
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select*from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| carthy  | 17 | delhi   |    90 |
+| kodi    | 40 | bng     |    66 |
+| alex    | 45 | hyd     |    79 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select name from student;
++---------+
+| name    |
++---------+
+| prakash |
+| carthy  |
+| kodi    |
+| alex    |
+| dolly   |
+| chancy  |
++---------+
+6 rows in set (0.00 sec)
+
+mysql> update student set address='chennai' where id = 45;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| carthy  | 17 | delhi   |    90 |
+| kodi    | 40 | bng     |    66 |
+| alex    | 45 | chennai |    79 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table student add phoneNo int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select*from student;
++---------+----+---------+-------+---------+
+| name    | id | address | marks | phoneNo |
++---------+----+---------+-------+---------+
+| prakash | 12 | hyd     |    78 |    NULL |
+| carthy  | 17 | delhi   |    90 |    NULL |
+| kodi    | 40 | bng     |    66 |    NULL |
+| alex    | 45 | chennai |    79 |    NULL |
+| dolly   | 48 | pune    |    67 |    NULL |
+| chancy  | 78 | mumbai  |    34 |    NULL |
++---------+----+---------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update student set phoneNo=123;
+Query OK, 6 rows affected (0.01 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> select*from student;
++---------+----+---------+-------+---------+
+| name    | id | address | marks | phoneNo |
++---------+----+---------+-------+---------+
+| prakash | 12 | hyd     |    78 |     123 |
+| carthy  | 17 | delhi   |    90 |     123 |
+| kodi    | 40 | bng     |    66 |     123 |
+| alex    | 45 | chennai |    79 |     123 |
+| dolly   | 48 | pune    |    67 |     123 |
+| chancy  | 78 | mumbai  |    34 |     123 |
++---------+----+---------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update student set phoneNo=456 where id=12;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from student;
++---------+----+---------+-------+---------+
+| name    | id | address | marks | phoneNo |
++---------+----+---------+-------+---------+
+| prakash | 12 | hyd     |    78 |     456 |
+| carthy  | 17 | delhi   |    90 |     123 |
+| kodi    | 40 | bng     |    66 |     123 |
+| alex    | 45 | chennai |    79 |     123 |
+| dolly   | 48 | pune    |    67 |     123 |
+| chancy  | 78 | mumbai  |    34 |     123 |
++---------+----+---------+-------+---------+
+6 rows in set (0.00 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(30) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| phoneNo | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student modify column name varchar(60);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| name    | varchar(60) | YES  |     | NULL    |       |
+| id      | int         | NO   | PRI | NULL    |       |
+| address | varchar(50) | YES  |     | NULL    |       |
+| marks   | int         | YES  |     | NULL    |       |
+| phoneNo | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student drop phoneNo;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select*from student;
++---------+----+---------+-------+
+| name    | id | address | marks |
++---------+----+---------+-------+
+| prakash | 12 | hyd     |    78 |
+| carthy  | 17 | delhi   |    90 |
+| kodi    | 40 | bng     |    66 |
+| alex    | 45 | chennai |    79 |
+| dolly   | 48 | pune    |    67 |
+| chancy  | 78 | mumbai  |    34 |
++---------+----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select 10+20;
++-------+
+| 10+20 |
++-------+
+|    30 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select10*20;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select10*20' at line 1
+mysql> select 10*20;
++-------+
+| 10*20 |
++-------+
+|   200 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select 10/5;
++--------+
+| 10/5   |
++--------+
+| 2.0000 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select 10%5;
++------+
+| 10%5 |
++------+
+|    0 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select 12%5;
++------+
+| 12%5 |
++------+
+|    2 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select * from customers;
+ERROR 1146 (42S02): Table 'nit.customers' doesn't exist
+mysql> create table customers(name varchar(30),id int not null primary key,address varchar(50),age,salary int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',salary int)' at line 1
+mysql> create table customers (
+    -> id int(30) not null,
+    -> name varchar(50),
+    -> address varchar(60),
+    -> salary decimal (18, 2)
+    -> );
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| nit                |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> select*from customers;
+Empty set (0.00 sec)
+
+mysql> desc customers;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| id      | int           | NO   |     | NULL    |       |
+| name    | varchar(50)   | YES  |     | NULL    |       |
+| address | varchar(60)   | YES  |     | NULL    |       |
+| salary  | decimal(18,2) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into customers(id,name,address,salary)values(1,'Ramesh','Ahemdabad',2000.00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from customers;
++----+--------+-----------+---------+
+| id | name   | address   | salary  |
++----+--------+-----------+---------+
+|  1 | Ramesh | Ahemdabad | 2000.00 |
++----+--------+-----------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into customers values(2,'Khilan','Delhi',1500.00);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(3,'Kaushik','Kota',2000.00),(4,'Chaitali','Mumbai',6500.00),(5,'Hardik','Bhopal',8500.00),(6,'Komal','MP',4500.00),(7,'Muffy','Indore',10000.00);
+ERROR 1366 (HY000): Incorrect integer value: 'Kaushik' for column 'id' at row 1
+mysql> insert into student values(3,'kaushik','Kota',2000.00),(4,'Chaitali','Mumbai',6500.00),(5,'Hardik','Bhopal',8500.00),(6,'Komal','MP',4500.00),(7,'Muffy','Indore',10000.00);
+ERROR 1366 (HY000): Incorrect integer value: 'kaushik' for column 'id' at row 1
+mysql> insert into student values(3,'Raja','Kota',2000.00),(4,'Chaitali','Mumbai',6500.00),(5,'Hardik','Bhopal',8500.00),(6,'Komal','MP',4500.00),(7,'Muffy','Indore',10000.00);
+ERROR 1366 (HY000): Incorrect integer value: 'Raja' for column 'id' at row 1
+mysql> select*from customers;
++----+--------+-----------+---------+
+| id | name   | address   | salary  |
++----+--------+-----------+---------+
+|  1 | Ramesh | Ahemdabad | 2000.00 |
+|  2 | Khilan | Delhi     | 1500.00 |
++----+--------+-----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into student values(3,'Kaushik','Kota',2000.00),(4,'Chaitali','Mumbai',6500.00),(5,'Hardik','Bhopal',8500.00),(6,'Komal','MP',4500.00),(7,'Muffy','Indore',10000.00);
+ERROR 1366 (HY000): Incorrect integer value: 'Kaushik' for column 'id' at row 1
+mysql> insert into student values(4,'Chaitali','Mumbai',6500.00),(5,'Hardik','Bhopal',8500.00),(6,'Komal','MP',4500.00),(7,'Muffy','Indore',10000.00);
+ERROR 1366 (HY000): Incorrect integer value: 'Chaitali' for column 'id' at row 1
+mysql> insert into customers values(3,'Kaushik','Kota',2000.00),(4,'Chaitali','Mumbai',6500.00),(5,'Hardik','Bhopal',8500.00),(6,'Komal','MP',4500.00),(7,'Muffy','Indore',10000.00);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select*from customers;
++----+----------+-----------+----------+
+| id | name     | address   | salary   |
++----+----------+-----------+----------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 |
+|  2 | Khilan   | Delhi     |  1500.00 |
+|  3 | Kaushik  | Kota      |  2000.00 |
+|  4 | Chaitali | Mumbai    |  6500.00 |
+|  5 | Hardik   | Bhopal    |  8500.00 |
+|  6 | Komal    | MP        |  4500.00 |
+|  7 | Muffy    | Indore    | 10000.00 |
++----+----------+-----------+----------+
+7 rows in set (0.00 sec)
+
+mysql> alter table customers add age int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update columns set age=32;
+ERROR 1146 (42S02): Table 'nit.columns' doesn't exist
+mysql> select*from customers;
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 | NULL |
+|  2 | Khilan   | Delhi     |  1500.00 | NULL |
+|  3 | Kaushik  | Kota      |  2000.00 | NULL |
+|  4 | Chaitali | Mumbai    |  6500.00 | NULL |
+|  5 | Hardik   | Bhopal    |  8500.00 | NULL |
+|  6 | Komal    | MP        |  4500.00 | NULL |
+|  7 | Muffy    | Indore    | 10000.00 | NULL |
++----+----------+-----------+----------+------+
+7 rows in set (0.00 sec)
+
+mysql> update columns set age=32;
+ERROR 1146 (42S02): Table 'nit.columns' doesn't exist
+mysql> ipdate columns set age=32 where id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ipdate columns set age=32 where id=1' at line 1
+mysql> update columns set age=32 where id=1;
+ERROR 1146 (42S02): Table 'nit.columns' doesn't exist
+mysql> select*from customers;
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 | NULL |
+|  2 | Khilan   | Delhi     |  1500.00 | NULL |
+|  3 | Kaushik  | Kota      |  2000.00 | NULL |
+|  4 | Chaitali | Mumbai    |  6500.00 | NULL |
+|  5 | Hardik   | Bhopal    |  8500.00 | NULL |
+|  6 | Komal    | MP        |  4500.00 | NULL |
+|  7 | Muffy    | Indore    | 10000.00 | NULL |
++----+----------+-----------+----------+------+
+7 rows in set (0.00 sec)
+
+mysql> ipdate customers set age=32 where id=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ipdate customers set age=32 where id=1' at line 1
+mysql> update customers set age=32 where id=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from customers;
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 |   32 |
+|  2 | Khilan   | Delhi     |  1500.00 | NULL |
+|  3 | Kaushik  | Kota      |  2000.00 | NULL |
+|  4 | Chaitali | Mumbai    |  6500.00 | NULL |
+|  5 | Hardik   | Bhopal    |  8500.00 | NULL |
+|  6 | Komal    | MP        |  4500.00 | NULL |
+|  7 | Muffy    | Indore    | 10000.00 | NULL |
++----+----------+-----------+----------+------+
+7 rows in set (0.00 sec)
+
+mysql> update customers set age=25 where id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set age=223 where id=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set age=23 where id=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set age=25 where id=4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set age=27 where id=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set age=22 where id=6;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers set age=24 where id=7;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from customers;
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 |   32 |
+|  2 | Khilan   | Delhi     |  1500.00 |   25 |
+|  3 | Kaushik  | Kota      |  2000.00 |   23 |
+|  4 | Chaitali | Mumbai    |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal    |  8500.00 |   27 |
+|  6 | Komal    | MP        |  4500.00 |   22 |
+|  7 | Muffy    | Indore    | 10000.00 |   24 |
++----+----------+-----------+----------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers where salary>5000;
++----+----------+---------+----------+------+
+| id | name     | address | salary   | age  |
++----+----------+---------+----------+------+
+|  4 | Chaitali | Mumbai  |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal  |  8500.00 |   27 |
+|  7 | Muffy    | Indore  | 10000.00 |   24 |
++----+----------+---------+----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customers where salary=2000;
++----+---------+-----------+---------+------+
+| id | name    | address   | salary  | age  |
++----+---------+-----------+---------+------+
+|  1 | Ramesh  | Ahemdabad | 2000.00 |   32 |
+|  3 | Kaushik | Kota      | 2000.00 |   23 |
++----+---------+-----------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customers where salary != 2000;
++----+----------+---------+----------+------+
+| id | name     | address | salary   | age  |
++----+----------+---------+----------+------+
+|  2 | Khilan   | Delhi   |  1500.00 |   25 |
+|  4 | Chaitali | Mumbai  |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal  |  8500.00 |   27 |
+|  6 | Komal    | MP      |  4500.00 |   22 |
+|  7 | Muffy    | Indore  | 10000.00 |   24 |
++----+----------+---------+----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers where salary <> 2000;
++----+----------+---------+----------+------+
+| id | name     | address | salary   | age  |
++----+----------+---------+----------+------+
+|  2 | Khilan   | Delhi   |  1500.00 |   25 |
+|  4 | Chaitali | Mumbai  |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal  |  8500.00 |   27 |
+|  6 | Komal    | MP      |  4500.00 |   22 |
+|  7 | Muffy    | Indore  | 10000.00 |   24 |
++----+----------+---------+----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers where salary >= 6500;
++----+----------+---------+----------+------+
+| id | name     | address | salary   | age  |
++----+----------+---------+----------+------+
+|  4 | Chaitali | Mumbai  |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal  |  8500.00 |   27 |
+|  7 | Muffy    | Indore  | 10000.00 |   24 |
++----+----------+---------+----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customers;
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 |   32 |
+|  2 | Khilan   | Delhi     |  1500.00 |   25 |
+|  3 | Kaushik  | Kota      |  2000.00 |   23 |
+|  4 | Chaitali | Mumbai    |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal    |  8500.00 |   27 |
+|  6 | Komal    | MP        |  4500.00 |   22 |
+|  7 | Muffy    | Indore    | 10000.00 |   24 |
++----+----------+-----------+----------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers where age >= 25;
++----+----------+-----------+---------+------+
+| id | name     | address   | salary  | age  |
++----+----------+-----------+---------+------+
+|  1 | Ramesh   | Ahemdabad | 2000.00 |   32 |
+|  2 | Khilan   | Delhi     | 1500.00 |   25 |
+|  4 | Chaitali | Mumbai    | 6500.00 |   25 |
+|  5 | Hardik   | Bhopal    | 8500.00 |   27 |
++----+----------+-----------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customers where age >= 25 and salary >= 6500;
++----+----------+---------+---------+------+
+| id | name     | address | salary  | age  |
++----+----------+---------+---------+------+
+|  4 | Chaitali | Mumbai  | 6500.00 |   25 |
+|  5 | Hardik   | Bhopal  | 8500.00 |   27 |
++----+----------+---------+---------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customers where age >= 25 or salary >= 6500;
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 |   32 |
+|  2 | Khilan   | Delhi     |  1500.00 |   25 |
+|  4 | Chaitali | Mumbai    |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal    |  8500.00 |   27 |
+|  7 | Muffy    | Indore    | 10000.00 |   24 |
++----+----------+-----------+----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers where age is not null;
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 |   32 |
+|  2 | Khilan   | Delhi     |  1500.00 |   25 |
+|  3 | Kaushik  | Kota      |  2000.00 |   23 |
+|  4 | Chaitali | Mumbai    |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal    |  8500.00 |   27 |
+|  6 | Komal    | MP        |  4500.00 |   22 |
+|  7 | Muffy    | Indore    | 10000.00 |   24 |
++----+----------+-----------+----------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers where name like 'Ko%';
++----+-------+---------+---------+------+
+| id | name  | address | salary  | age  |
++----+-------+---------+---------+------+
+|  6 | Komal | MP      | 4500.00 |   22 |
++----+-------+---------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from customers where age in (25, 27);
++----+----------+---------+---------+------+
+| id | name     | address | salary  | age  |
++----+----------+---------+---------+------+
+|  2 | Khilan   | Delhi   | 1500.00 |   25 |
+|  4 | Chaitali | Mumbai  | 6500.00 |   25 |
+|  5 | Hardik   | Bhopal  | 8500.00 |   27 |
++----+----------+---------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customers where age between 25 and 27;
++----+----------+---------+---------+------+
+| id | name     | address | salary  | age  |
++----+----------+---------+---------+------+
+|  2 | Khilan   | Delhi   | 1500.00 |   25 |
+|  4 | Chaitali | Mumbai  | 6500.00 |   25 |
+|  5 | Hardik   | Bhopal  | 8500.00 |   27 |
++----+----------+---------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customers
+    -> where exists (select age from customers where salary > 6500);
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 |   32 |
+|  2 | Khilan   | Delhi     |  1500.00 |   25 |
+|  3 | Kaushik  | Kota      |  2000.00 |   23 |
+|  4 | Chaitali | Mumbai    |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal    |  8500.00 |   27 |
+|  6 | Komal    | MP        |  4500.00 |   22 |
+|  7 | Muffy    | Indore    | 10000.00 |   24 |
++----+----------+-----------+----------+------+
+7 rows in set (0.01 sec)
+
+mysql> select age from customers
+    -> where exists (select age from customers where salary > 6500);
++------+
+| age  |
++------+
+|   32 |
+|   25 |
+|   23 |
+|   25 |
+|   27 |
+|   22 |
+|   24 |
++------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers
+    -> where age > all (select age from customers where salary > 6500);
++----+--------+-----------+---------+------+
+| id | name   | address   | salary  | age  |
++----+--------+-----------+---------+------+
+|  1 | Ramesh | Ahemdabad | 2000.00 |   32 |
++----+--------+-----------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from customers
+    -> where age > any (select age from customers where salary > 6500);
++----+----------+-----------+---------+------+
+| id | name     | address   | salary  | age  |
++----+----------+-----------+---------+------+
+|  1 | Ramesh   | Ahemdabad | 2000.00 |   32 |
+|  2 | Khilan   | Delhi     | 1500.00 |   25 |
+|  4 | Chaitali | Mumbai    | 6500.00 |   25 |
+|  5 | Hardik   | Bhopal    | 8500.00 |   27 |
++----+----------+-----------+---------+------+
+4 rows in set (0.01 sec)
+
+mysql> select column1, column2, columnN
+    -> from table_name
+    -> where single value matching expression;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'value matching expression' at line 3
+mysql> select * from customers
+    -> system cls
+    -> system cls;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'system cls
+system cls' at line 2
+mysql> select * from customers;
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 |   32 |
+|  2 | Khilan   | Delhi     |  1500.00 |   25 |
+|  3 | Kaushik  | Kota      |  2000.00 |   23 |
+|  4 | Chaitali | Mumbai    |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal    |  8500.00 |   27 |
+|  6 | Komal    | MP        |  4500.00 |   22 |
+|  7 | Muffy    | Indore    | 10000.00 |   24 |
++----+----------+-----------+----------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers where salary = 10000;
++----+-------+---------+----------+------+
+| id | name  | address | salary   | age  |
++----+-------+---------+----------+------+
+|  7 | Muffy | Indore  | 10000.00 |   24 |
++----+-------+---------+----------+------+
+1 row in set (0.00 sec)
+
+mysql> select (15+6) as addition
+    -> system cls;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'system cls' at line 2
+mysql> select count (*) as "RECORDS" from customers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*) as "RECORDS" from customers' at line 1
+mysql> select current timestamp;
+ERROR 1054 (42S22): Unknown column 'current' in 'field list'
+mysql> create table salary as
+    -> select id, salary
+    -> from customers;
+Query OK, 7 rows affected (0.03 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from customers;
++----+----------+-----------+----------+------+
+| id | name     | address   | salary   | age  |
++----+----------+-----------+----------+------+
+|  1 | Ramesh   | Ahemdabad |  2000.00 |   32 |
+|  2 | Khilan   | Delhi     |  1500.00 |   25 |
+|  3 | Kaushik  | Kota      |  2000.00 |   23 |
+|  4 | Chaitali | Mumbai    |  6500.00 |   25 |
+|  5 | Hardik   | Bhopal    |  8500.00 |   27 |
+|  6 | Komal    | MP        |  4500.00 |   22 |
+|  7 | Muffy    | Indore    | 10000.00 |   24 |
++----+----------+-----------+----------+------+
+7 rows in set (0.00 sec)
+
+
+mysql> select id, name, salary from customers;
++----+----------+----------+
+| id | name     | salary   |
++----+----------+----------+
+|  1 | Ramesh   |  2000.00 |
+|  2 | Khilan   |  1500.00 |
+|  3 | kaushik  |  2000.00 |
+|  4 | Chaitali |  6500.00 |
+|  5 | Hardik   |  8500.00 |
+|  6 | Komal    |  4500.00 |
+|  7 | Muffy    | 10000.00 |
++----+----------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers;
++----+----------+-----+-----------+----------+
+| ID | NAME     | AGE | ADDRESS   | SALARY   |
++----+----------+-----+-----------+----------+
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 |
+|  2 | Khilan   |  25 | Delhi     |  1500.00 |
+|  3 | kaushik  |  23 | Kota      |  2000.00 |
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 |
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 |
+|  6 | Komal    |  22 | MP        |  4500.00 |
+|  7 | Muffy    |  24 | Indore    | 10000.00 |
++----+----------+-----+-----------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select id, name, salary
+    -> from customers
+    -> where salary>2000;
++----+----------+----------+
+| id | name     | salary   |
++----+----------+----------+
+|  4 | Chaitali |  6500.00 |
+|  5 | Hardik   |  8500.00 |
+|  6 | Komal    |  4500.00 |
+|  7 | Muffy    | 10000.00 |
++----+----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select id, name, salary
+    -> from customers
+    -> where name ='Hardik';
++----+--------+---------+
+| id | name   | salary  |
++----+--------+---------+
+|  5 | Hardik | 8500.00 |
++----+--------+---------+
+1 row in set (0.00 sec)
