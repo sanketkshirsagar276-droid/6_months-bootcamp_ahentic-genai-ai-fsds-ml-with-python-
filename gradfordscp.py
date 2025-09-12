@@ -38,7 +38,7 @@ def generate_visualization(df):
     if "Highest_Qualified_Member" in df.columns:
         plt.figure(figsize=(6,4))
         sns.barplot(
-            x=df["Highest_QualifiedMember"].value_counts().index,
+            x=df["Highest_Qualified_Member"].value_counts().index,
             y=df["Highest_Qualified_Member"].value_counts().values
         )
         plt.title("Bar graph of Highest Qualified Members")
@@ -47,7 +47,7 @@ def generate_visualization(df):
         plot_paths.append(path)
         plt.close()
 
-    numeric_df = df.select_dtypes(inclide=["number"])
+    numeric_df = df.select_dtypes(include=["number"])
     if not numeric_df.empty:
         plt.figure(figsize=(8,5))
         sns.heatmap(numeric_df.corr(), annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5)
